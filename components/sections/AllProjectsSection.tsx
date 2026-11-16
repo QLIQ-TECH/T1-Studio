@@ -354,13 +354,13 @@ console.log("projects 299", projects);
                 value="private"
                 className="rounded-full border border-white/25 px-8 py-3.5 text-sm font-semibold text-white/50 transition-colors duration-200 after:hidden hover:bg-white/10 hover:text-white data-active:border-white data-active:bg-white/10 data-active:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                Private
+                Commercial
               </TabsTrigger>
               <TabsTrigger
                 value="retail"
                 className="rounded-full border border-white/25 px-8 py-3.5 text-sm font-semibold text-white/50 transition-colors duration-200 after:hidden hover:bg-white/10 hover:text-white data-active:border-white data-active:bg-white/10 data-active:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                Residential
+                Private
               </TabsTrigger>
             </TabsList>
           </div>
