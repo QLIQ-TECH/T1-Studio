@@ -45,7 +45,7 @@ export const getProjects = (t: Translator): ProjectItem[] => [
     id: "emirates-hills-villa",
     title: "Emirates Hills",
     propertyType: t("pt_villa"),
-    completionYear: 2026,
+    completionYear: "2026",
     location: "Emirates Hills, Dubai",
     description:
       "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.",
@@ -60,7 +60,7 @@ export const getProjects = (t: Translator): ProjectItem[] => [
     id: "palm-penthouse",
     title: "Palm Jumeirah Penthouse",
     propertyType: t("pt_penthouse"),
-    completionYear: 2025,
+    completionYear: "2025",
     location: "Palm Jumeirah, Dubai",
     description:
       "A spectacular penthouse overlooking the Arabian Gulf, featuring bespoke joinery, a fully fitted kitchen in Calacatta marble, custom wardrobes and a panoramic living space designed to maximise every view.",
@@ -75,7 +75,7 @@ export const getProjects = (t: Translator): ProjectItem[] => [
     id: "downtown-residence",
     title: "Downtown Dubai Residence",
     propertyType: t("pt_apartment"),
-    completionYear: 2025,
+    completionYear: "2025",
     location: "Downtown Dubai",
     description:
       "A sleek urban apartment transformed with floor-to-ceiling bespoke cabinetry, an integrated kitchen and a custom home-office unit — all crafted to deliver maximum functionality within a refined minimalist aesthetic.",
@@ -90,7 +90,7 @@ export const getProjects = (t: Translator): ProjectItem[] => [
     id: "dubai-hills-villa",
     title: "Dubai Hills Estate",
     propertyType: t("pt_villa"),
-    completionYear: 2026,
+    completionYear: "2026",
     location: "Dubai Hills, Dubai",
     description:
       "A sprawling family villa with a full-home fit-out encompassing a chef's kitchen, six bespoke wardrobes, living and dining areas and an outdoor kitchen — delivered as a single, seamlessly coordinated project.",

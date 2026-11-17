@@ -674,7 +674,8 @@ export interface CmsBlogProjectItem {
   id: string;
   title: string;
   propertyType: string;
-  completionYear: number;
+  // Free text on the CMS side — holds a numeric year, "Ongoing", or "".
+  completionYear: string;
   location: string;
   shortDescription: string;
   image: CmsImage;
@@ -689,6 +690,7 @@ export interface CmsBlogProjectItem {
   slug?: string;
   status?: string;
   hasInnerPage?: boolean;
+  kitchens?: number;
 }
 
 export interface CmsBlogListingSection {
