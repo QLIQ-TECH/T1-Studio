@@ -544,6 +544,7 @@ export function PartnerLeadSection({
   if (submitted) {
     return (
       <section
+        id="partner-lead-form"
         ref={sectionRef}
         aria-labelledby="partner-lead-heading"
         className="flex min-h-150 flex-col items-center justify-center bg-[#0C0C0C] px-8 py-20 text-center"
@@ -561,6 +562,7 @@ export function PartnerLeadSection({
 
   return (
     <section
+      id="partner-lead-form"
       ref={sectionRef}
       aria-labelledby="partner-lead-heading"
       className="flex min-h-150 flex-col overflow-hidden lg:flex-row"
