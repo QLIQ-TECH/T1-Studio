@@ -1,5 +1,6 @@
 import type {
   CmsBlogListingSection,
+  CmsBlogProjectItem,
   CmsProjectsFilters,
   CmsTestimonialsSection,
   CmsBeforeAfterSection,
@@ -111,20 +112,49 @@ export const mapProjectsAllProjectsLabels = (
   },
 });
 
+// No image came through from Downloads for these testimonials (nothing
+// usable finished downloading), so each is shown a real kitchen photo from
+// the Projects list instead of its original CMS portrait. Every one of the
+// 22 project photos was reviewed by hand first — several carry a "Kitchen
+// Fit-Out" alt text but are actually building exteriors or living rooms
+// (e.g. Blue Waters, City Walk, Al Yasmeen, Soho Properties, NAS Building,
+// Amalfi Villas), and one genuine kitchen shot (Jumeirah Gate) has an
+// on-screen date-stamp burned in — all excluded. Two testimonials map to
+// their own project's verified kitchen photo; the rest draw from the
+// remaining verified kitchen photos.
+const TESTIMONIAL_IMAGE_SLUG: Record<string, string> = {
+  "Golden Mile 3, Palm Jumeirah": "apartment-kitchen-fit-out-in-palm-jumeirah",
+  "Al Yasmeen, Sharjah": "club-drive-residence-dubai-hills-estate",
+  "City Walk, Dubai": "farm-grove",
+  "Almafi Villas, Dubai": "madinat-jumeirah-living-phase-4-dubai",
+  "Blue Waters, Dubai": "elvira-residential-apartments-dubai-hills-estate",
+  "Nas Building, Dubai": "saeed-bin-omar-building",
+  "Soho Properties, Dubai": "golf-grand-dubai",
+  "Safa Townhouses, Al Safa First": "safa-townhouses-al-safa-first-dubai",
+};
+
 export const mapProjectsTestimonials = (
   section: CmsTestimonialsSection,
+  projects: CmsBlogProjectItem[],
   locale: string,
 ) => ({
   label: getText(section.eyebrow, locale),
   heading: getText(section.heading, locale),
   testimonials: (section.testimonials || [])
     .filter((item) => item.isVisible)
-    .map((item, index) => ({
-      id: index,
-      name: getText(item.clientName, locale),
-      quote: getText(item.testimonial, locale),
-      image: item.image?.url || "",
-    })),
+    .map((item, index) => {
+      const slug = TESTIMONIAL_IMAGE_SLUG[item.clientName];
+      const matchedImage = slug
+        ? projects.find((p) => p.slug === slug)?.image?.url
+        : undefined;
+
+      return {
+        id: index,
+        name: getText(item.clientName, locale),
+        quote: getText(item.testimonial, locale),
+        image: matchedImage || item.image?.url || "",
+      };
+    }),
 });
 
 export const mapProjectsBeforeAfter = (
