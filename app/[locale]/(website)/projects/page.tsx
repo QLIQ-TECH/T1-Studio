@@ -158,7 +158,11 @@ export default async function ProjectsPage({
 
       {s?.testimonials?.isVisible && (
         <TestimonialsSection
-          {...mapProjectsTestimonials(s.testimonials, locale)}
+          {...mapProjectsTestimonials(
+            s.testimonials,
+            projectsSection?.projects ?? [],
+            locale,
+          )}
         />
       )}
 
