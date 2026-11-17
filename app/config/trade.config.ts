@@ -82,6 +82,19 @@ export const mapTradeFaq = (section: CmsFaqSection) =>
       answer: f.answer as string,
     }));
 
+export const getTradeCtaBannerConfig = (locale: string) => ({
+  heading:
+    locale === "ar"
+      ? "هل أنت مستعد للشراكة مع تي ون ستوديو؟"
+      : "Ready to partner with T1 Studio?",
+  description:
+    locale === "ar"
+      ? "تواصل مع فريقنا وابدأ مشروعك القادم اليوم."
+      : "Get in touch with our team and start your next project today.",
+  buttonLabel: locale === "ar" ? "تواصل معنا" : "Get in Touch",
+  targetId: "partner-lead-form",
+});
+
 export const getResourceCenterConfig = (locale: string) => ({
   heading: locale === "ar" ? "مركز الموارد" : "Resource Center",
   prevLabel: locale === "ar" ? "السابق" : "Previous resources",

@@ -7,6 +7,7 @@ import { AwardsSection } from "@/components/sections/AwardsSection";
 import { MaterialInspirationSection } from "@/components/sections/MaterialInspirationSection";
 import { ProjectJourneySection } from "@/components/sections/ProjectJourneySection";
 import { StatsBar } from "@/components/sections/StatsBar";
+import { TradeCtaBanner } from "@/components/sections/TradeCtaBanner";
 import { SignatureProjectsSection } from "@/components/sections/SignatureProjectsSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { PartnerLeadSection } from "@/components/sections/PartnerLeadSection";
@@ -26,6 +27,7 @@ import {
   mapTradeFaq,
   getResourceCenterConfig,
   getPartnerLeadConfig,
+  getTradeCtaBannerConfig,
 } from "@/app/config/trade.config";
 
 export const revalidate = 3600;
@@ -123,6 +125,10 @@ export default async function TradePage({
             sectionLabel={tStats("sectionLabel")}
           />
         </FadeUp>
+      )}
+
+      {s?.stats?.isVisible && (
+        <TradeCtaBanner {...getTradeCtaBannerConfig(locale)} />
       )}
 
       {s?.projects?.isVisible && (
