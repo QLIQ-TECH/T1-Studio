@@ -44,9 +44,11 @@ export interface ProjectItem {
   id: string;
   title: string;
   propertyType: string;
-  completionYear: number;
+  // "Ongoing", a numeric year as text, or "" when unknown.
+  completionYear: string;
   location: string;
   description: string;
+  kitchens?: number;
   image: { src: string; alt: string };
   href: string;
   locationKey: string;
@@ -148,12 +150,19 @@ function FeaturedCard({
         <p className="text-base text-secondary font-medium">
           Property Type: {project.propertyType}
         </p>
-        <p className="text-base text-secondary font-medium">
-          Completion Year: {project.completionYear}
-        </p>
+        {project.completionYear && (
+          <p className="text-base text-secondary font-medium">
+            Completion Year: {project.completionYear}
+          </p>
+        )}
         <p className="text-base text-secondary font-medium">
           Location: {project.location}
         </p>
+        {(project.kitchens ?? 0) > 0 && (
+          <p className="text-base text-secondary font-medium">
+            Kitchens: {project.kitchens}
+          </p>
+        )}
 
         {project.description && (
           <p className="max-w-lg text-sm leading-relaxed text-secondary sm:text-[0.9375rem]">

@@ -36,6 +36,16 @@ export function toProjectHref(raw: string): string {
 const toOptions = (values: string[] = []) =>
   values.map((v) => ({ value: v, label: v }));
 
+// CMS stores completionYear as free text — a numeric year, "Ongoing", or "".
+// Number(p.completionYear) || 0 used to collapse both "Ongoing" and "" to the
+// misleading literal "0"; this keeps "Ongoing" as-is and leaves unknown
+// years blank instead of fabricating a year.
+function formatCompletionYear(p: { completionYear?: string; status?: string }): string {
+  const raw = (p.completionYear ?? "").trim();
+  if (p.status === "ongoing" || raw.toLowerCase() === "ongoing") return "Ongoing";
+  return /^\d+$/.test(raw) ? raw : "";
+}
+
 // ─── Projects list page ───────────────────────────────────────────────────────
 
 export const mapProjectsFilterOptions = (filters: CmsProjectsFilters | undefined, locale: string) => ({
@@ -60,9 +70,10 @@ export const mapProjectItems = (
       id: p._id,
       title: p.title,
       propertyType: p.category || "",
-      completionYear: Number(p.completionYear) || 0,
+      completionYear: formatCompletionYear(p),
       location: p.location,
       description: p.shortDescription,
+      kitchens: p.kitchens ?? 0,
       image: {
         src: p.image?.url || "",
         alt: getText(p.image?.alt, locale),
