@@ -170,20 +170,18 @@ function FeaturedCard({
           </p>
         )}
 
-        {project.hasInnerPage !== false && (
-          <div>
-            <Link
-              href={project.href}
-              className="group inline-flex items-center gap-2 rounded-full bg-secondary border border-white/30 px-6 py-2.5 text-sm font-medium text-black transition-all duration-200 hover:bg-black hover:text-white hover:border-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            >
-              {viewCaseStudyLabel}
-              <ArrowRight
-                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
-        )}
+        <div>
+          <Link
+            href={project.href}
+            className="group inline-flex items-center gap-2 rounded-full bg-secondary border border-white/30 px-6 py-2.5 text-sm font-medium text-black transition-all duration-200 hover:bg-black hover:text-white hover:border-black hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          >
+            {viewCaseStudyLabel}
+            <ArrowRight
+              className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </Link>
+        </div>
       </div>
     </>
   );
