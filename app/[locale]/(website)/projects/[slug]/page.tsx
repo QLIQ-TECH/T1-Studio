@@ -133,6 +133,15 @@ export default async function ProjectDetailsPage({ params }: Props) {
         />
       )}
 
+      {isVisible(gallery) && gallerySlides.length > 0 && (
+        <ImageCarouselSection
+          slides={gallerySlides}
+          aria-label={getText(gallery.heading, locale) || tCarousel("ariaLabel")}
+          prevLabel={tCarousel("prevLabel")}
+          nextLabel={tCarousel("nextLabel")}
+        />
+      )}
+
       {/* =====================================================
           BEFORE / AFTER
       ===================================================== */}
@@ -161,15 +170,6 @@ export default async function ProjectDetailsPage({ params }: Props) {
             }}
           />
         )}
-
-      {isVisible(gallery) && gallerySlides.length > 0 && (
-        <ImageCarouselSection
-          slides={gallerySlides}
-          aria-label={getText(gallery.heading, locale) || tCarousel("ariaLabel")}
-          prevLabel={tCarousel("prevLabel")}
-          nextLabel={tCarousel("nextLabel")}
-        />
-      )}
 
       {isVisible(materials) && materialItems.length > 0 && (
         <MaterialInspirationSection
