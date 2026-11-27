@@ -20,6 +20,7 @@ export interface AudienceTab {
 
 export interface DreamSpaceSectionProps {
   heading: string;
+  description?: string;
   audienceTabs: AudienceTab[];
   propertyTypeLabel: string;
   propertyTypeOptions: SelectOption[];
@@ -236,6 +237,7 @@ function TextArea({
 
 export function DreamSpaceSection({
   heading,
+  description,
   audienceTabs,
   propertyTypeLabel,
   propertyTypeOptions,
@@ -447,6 +449,7 @@ export function DreamSpaceSection({
           {heading}
         </h2>
 
+        {description && <p className="mb-8 text-base leading-relaxed text-white/75">{description}</p>}
         <form onSubmit={handleSubmit} aria-label={heading} noValidate>
           {/* Honeypot — hidden from real users, catches bots */}
           <div aria-hidden="true" className="absolute -left-[9999px] -top-[9999px] overflow-hidden">

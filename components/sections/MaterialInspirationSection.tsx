@@ -15,10 +15,12 @@ export interface MaterialInspirationItem {
   src: string;
   alt: string;
   label: string;
+  description?: string;
 }
 
 export interface MaterialInspirationSectionProps {
   heading: string;
+  description?: string;
   items: MaterialInspirationItem[];
   prevLabel?: string;
   nextLabel?: string;
@@ -39,11 +41,12 @@ function InspirationTile({
 }) {
   return (
     <motion.figure
-      className="relative aspect-[2/1] overflow-hidden"
+      className="overflow-hidden"
       initial={{ opacity: 0, scale: 1.04 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.9, ease: EASE, delay: index * 0.1 }}
     >
+      <div className="relative aspect-[2/1] overflow-hidden">
       {item.src && (
         <Image
           src={item.src}
@@ -66,6 +69,8 @@ function InspirationTile({
       <figcaption className="absolute bottom-0 left-0 p-5 text-2xl font-bold text-white sm:p-7 sm:text-3xl lg:text-4xl">
         {item.label}
       </figcaption>
+      </div>
+      {item.description && <p className="px-5 pb-7 pt-5 text-base leading-relaxed text-white/65 sm:px-7">{item.description}</p>}
     </motion.figure>
   );
 }
@@ -82,6 +87,7 @@ function GridLayout({
   inView: boolean;
 }) {
   const cols = Math.min(Math.max(items.length, 1), 4);
+  const hasDescriptions = items.some(item => Boolean(item.description));
 
   return (
     <>
@@ -103,8 +109,8 @@ function GridLayout({
       <ul
         role="list"
         aria-label={heading}
-        className="grid"
-        style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}
+        className={hasDescriptions ? `grid grid-cols-1 ${cols === 2 ? "sm:grid-cols-2" : cols === 3 ? "sm:grid-cols-3" : cols === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : ""}` : "grid"}
+        style={hasDescriptions ? undefined : { gridTemplateColumns: `repeat(${cols}, 1fr)` }}
       >
         {items.map((item, i) => (
           <li key={`${item.src}-${i}`} role="listitem">
@@ -228,6 +234,7 @@ export function MaterialInspirationSection({
   items,
   prevLabel = 'Previous slide',
   nextLabel = 'Next slide',
+  description,
 }: MaterialInspirationSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref as React.RefObject<Element>, {
@@ -243,6 +250,7 @@ export function MaterialInspirationSection({
       aria-labelledby="material-inspiration-heading"
       className="bg-[#0C0C0C]"
     >
+      {description && <p className="mx-auto max-w-3xl px-4 pt-10 text-center text-base leading-relaxed text-white/65 sm:px-8">{description}</p>}
       {isCarousel ? (
         <CarouselLayout
           heading={heading}

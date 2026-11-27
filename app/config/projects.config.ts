@@ -205,6 +205,7 @@ export const mapProjectMaterials = (
         fallbackName ||
         "Material",
       label: getText(item.title, locale),
+      description: getText(item.description, locale),
     }));
 
 export const mapProjectTestimonials = (

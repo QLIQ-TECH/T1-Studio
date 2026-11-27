@@ -1460,6 +1460,8 @@ export interface CmsProjectDetailConsultationSection {
 // ─── Project Detail Sections ─────────────────────────────────────────────────
 
 export interface CmsProjectDetailSections {
+  approach?: { isVisible: boolean; order: number; eyebrow?: CmsBilingualText; heading: CmsBilingualText; description: CmsBilingualText; image?: CmsImage };
+  faq?: { isVisible: boolean; order: number; heading: CmsBilingualText; faqs: { question: CmsBilingualText; answer: CmsBilingualText; isVisible: boolean }[] };
   hero: CmsProjectDetailHeroSection;
 
   overview: CmsProjectDetailOverviewSection;

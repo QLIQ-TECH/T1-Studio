@@ -16,6 +16,7 @@ interface HeroBannerProps {
   description?: string;
   cta?: string;
   imageSrc?: string;
+  imageAlt?: string;
   videoSrc?: string;
   breadcrumbs?: BreadcrumbItem[];
 }
@@ -30,6 +31,7 @@ export async function HeroBanner({
   description,
   cta,
   imageSrc,
+  imageAlt,
   videoSrc,
   breadcrumbs,
 }: HeroBannerProps) {
@@ -68,7 +70,7 @@ export async function HeroBanner({
       ) : (
         <Image
           src={imageSrc ?? ''}
-          alt={t("bgImageAlt")}
+          alt={imageAlt || t("bgImageAlt")}
           fill
           preload
           loading="eager"

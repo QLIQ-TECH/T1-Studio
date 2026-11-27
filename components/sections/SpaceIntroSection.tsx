@@ -17,6 +17,7 @@ export interface SpaceIntroSectionProps {
   image: string;
   imageAlt: string;
   className?: string;
+  imagePosition?: "left" | "right";
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -29,7 +30,8 @@ export function SpaceIntroSection({
   challengeDescription,
   image,
   imageAlt,
-  className
+  className,
+  imagePosition = "left",
 }: SpaceIntroSectionProps) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref as React.RefObject<Element>, {
@@ -57,8 +59,8 @@ export function SpaceIntroSection({
       <div className="page-wrap relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-[4fr_3fr] lg:gap-16">
         {/* Image */}
         <motion.div
-          className={`relative w-full aspect-3/4 max-w-sm overflow-hidden lg:max-w-none ,${className}`}
-          initial={{ opacity: 0, x: -40 }}
+          className={`relative w-full aspect-3/4 max-w-sm overflow-hidden lg:max-w-none ${imagePosition === "right" ? "order-2" : "order-1"} ${className ?? ""}`}
+          initial={{ opacity: 0, x: imagePosition === "right" ? 40 : -40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE }}
         >
@@ -72,7 +74,7 @@ export function SpaceIntroSection({
         </motion.div>
 
         {/* Content */}
-        <div className="flex flex-col gap-6">
+        <div className={`flex flex-col gap-6 ${imagePosition === "right" ? "order-1" : "order-2"}`}>
           <motion.p
             className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50"
             initial={{ opacity: 0, y: 16 }}
@@ -93,7 +95,7 @@ export function SpaceIntroSection({
           </motion.h2>
 
           <motion.p
-            className="text-sm leading-relaxed text-white/65 sm:text-base"
+            className="whitespace-pre-line text-sm leading-relaxed text-white/65 sm:text-base"
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: EASE, delay: 0.25 }}
@@ -108,12 +110,12 @@ export function SpaceIntroSection({
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, ease: EASE, delay: 0.35 }}
             >
-              <p 
+              <h2
                className="text-2xl font-bold leading-tight text-white/60 sm:text-4xl lg:text-[2.6rem] lg:leading-[1.15]"
               // className="mb-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white/40"
               >
                 {challengeTitle ?? "Challenge"}
-              </p>
+              </h2>
               <p className="text-sm leading-relaxed text-white/65 mt-4 sm:text-base">
                 {challengeDescription}
               </p>

@@ -1,3 +1,5 @@
+import { SpaceApproachSection } from "@/components/sections/SpaceApproachSection";
+import { FaqSection } from "@/components/sections/FaqSection";
 import type { Metadata } from "next";
 import { JsonLdSchema } from "@/components/JsonLdSchema";
 import { BeforeAfterSection } from "@/components/sections/BeforeAfterSection";
@@ -13,7 +15,7 @@ import { FadeUp } from "@/components/ui/animate";
 import { getDreamSpaceConfig } from "@/app/config/home.config";
 import { getProjectDetailCms } from "@/lib/cms/project-detail-page";
 import { getTranslations } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import {
   getText,
   isVisible,
@@ -64,11 +66,25 @@ export default async function ProjectDetailsPage({ params }: Props) {
     ]);
 
   if (!project) {
+    const aliases: Record<string, string> = {
+      "farm-grove": "farm-grove-the-valley-dubai",
+      "rose-hills": "rose-hills-dubai-hills-estate",
+    };
+    const replacement = aliases[slug] ? await getProjectDetailCms(aliases[slug], locale) : null;
+    if (replacement?.status === "published") {
+      permanentRedirect(`${locale === "ar" ? "/ar" : ""}/projects/${replacement.slug}`);
+    }
+  }
+  if (!project) {
     notFound();
   }
 
   const sections = project.sections;
   const hero = sections?.hero;
+  const approach = sections?.approach;
+  const faq = sections?.faq;
+  const consultation = sections?.consultation;
+  const faqItems = faq?.faqs?.filter(item => item.isVisible !== false).map(item => ({ question: getText(item.question, locale), answer: getText(item.answer, locale) })).filter(item => item.question && item.answer) ?? [];
   const overview = sections?.overview;
   const beforeAfter = sections?.beforeAfter;
   const gallery = sections?.gallery;
@@ -100,6 +116,7 @@ export default async function ProjectDetailsPage({ params }: Props) {
             })) || []
           }
           imageSrc={hero.backgroundImage?.url || ""}
+          imageAlt={getText(hero.backgroundImage?.alt, locale)}
         />
       )}
 
@@ -127,9 +144,17 @@ export default async function ProjectDetailsPage({ params }: Props) {
           imageAlt={
             getText(overview.image?.alt, locale) || fallbackName || "Project"
           }
-          className={
-            overview.imagePosition === "left" ? "order-1" : "order-2 lg:order-1"
-          }
+          imagePosition={overview.imagePosition === "left" ? "left" : "right"}
+        />
+      )}
+
+      {approach && isVisible(approach) && getText(approach.description, locale) && (
+        <SpaceApproachSection
+          label={getText(approach.eyebrow, locale)}
+          heading={getText(approach.heading, locale)}
+          items={getText(approach.description, locale).split("\n\n").filter(Boolean)}
+          image={approach.image?.url || overview.image?.url || ""}
+          imageAlt={getText(approach.image?.alt, locale) || getText(overview.image?.alt, locale)}
         />
       )}
 
@@ -175,6 +200,7 @@ export default async function ProjectDetailsPage({ params }: Props) {
         <MaterialInspirationSection
           heading={getText(materials.heading, locale)}
           items={materialItems}
+          description={getText(materials.description, locale)}
         />
       )}
 
@@ -202,7 +228,20 @@ export default async function ProjectDetailsPage({ params }: Props) {
         />
       )}
 
-      <DreamSpaceSection {...getDreamSpaceConfig(tDreamSpace)} />
+      {faq && isVisible(faq) && faqItems.length > 0 && <>
+        <FaqSection label="" heading={getText(faq.heading, locale)} items={faqItems} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org", "@type": "FAQPage",
+          mainEntity: faqItems.map(item => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })),
+        }).replace(/</g, "\\u003c") }} />
+      </>}
+      {(!consultation || isVisible(consultation)) && <DreamSpaceSection
+        {...getDreamSpaceConfig(tDreamSpace)}
+        {...(getText(consultation?.heading, locale) && { heading: getText(consultation?.heading, locale) })}
+        description={getText(consultation?.description, locale)}
+        {...(getText(consultation?.submitButtonLabel, locale) && { submitLabel: getText(consultation?.submitButtonLabel, locale) })}
+        {...(consultation?.image?.url && { imageSrc: consultation.image.url, imageAlt: getText(consultation.image.alt, locale) })}
+      />}
       <JsonLdSchema globalSeo={project?.globalSeo} pageSeo={project?.seo} />
     </main>
   );
